@@ -165,83 +165,87 @@ public class RedT extends LinearOpMode {
                 if (gamepad2.a && !a2) {
 
                     // goofy ahh sleep
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
 
                     desired_linear_slide_position = 0.7;
+                    servos.pass();
+                    //pivot is supposed to be 0
+                    servos.pivot(0,0);
+                    servos.moveArm(0);
 
                     a2 = true;
                 } else if (!gamepad2.a) {
                     a2 = false;
-                }
-                else if (gamepad2.right_bumper) {
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
-                    servos.diffyLeft.setPosition(1);
-                }
-                else if (gamepad2.left_bumper) {
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
-                    servos.diffyLeft.setPosition(0);
-                }
-                else if (gamepad2.x && !x2) {
-                    servos.diffyRight.setPosition(1);
+                } if (gamepad2.x && !x2) {
+
+                    // goofy ahh sleep
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+
+                    desired_linear_slide_position = 0.01;
+                    servos.retract();
+                    servos.moveArm(0);
+                    servos.pivot(.5,.5);
+
 
                     x2 = true;
+                } else if (!gamepad2.x) {
+                    x2 = false;
                 }
-                else if (!gamepad2.x) {
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
-                x2 = false;
-                }
-                else if (gamepad2.y && !y2) {
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
-                    servos.diffyRight.setPosition(0);
+                if (gamepad2.y && !y2) {
+
+                    // goofy ahh sleep
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+
+                    desired_linear_slide_position = 0.25;
+                    servos.extend();
+                    servos.moveArm(.58);
+                    servos.pivot(.5,.5);
 
                     y2 = true;
-                }
-                else if (!gamepad2.y) {
-                    try { Thread.sleep(1000); } catch (Exception ignored) {}
+                } else if (!gamepad2.y) {
                     y2 = false;
                 }
-                else if (gamepad2.b && !b2) {
-                    ServoErmSigma.upArm();
+
+                if (gamepad2.b && !b2) {
+
+                    // goofy ahh sleep
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+
+                    desired_linear_slide_position = 0.01;
+                    servos.pass();
+                    servos.moveArm(0);
+                    //supposed to pivot to 0
+                    servos.pivot(0,0);
 
                     b2 = true;
-                }
-                else if (!gamepad2.b) {
+                } else if (!gamepad2.b) {
                     b2 = false;
                 }
-                else if (gamepad2.dpad_left && !gamepad2.dpad_left) {
-                    ServoErmSigma.turnLeft(45);
 
-                    left_bumper2 = true;
+                if (gamepad2.right_trigger > .5) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.openClaw();
                 }
-                else if (!gamepad2.dpad_left) {
-                    left_bumper2 = false;
+                if (gamepad2.left_trigger > .5) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.closeClaw();
                 }
-                //d
-                else if (gamepad2.dpad_right && !gamepad2.dpad_right) {
-                    ServoErmSigma.turnRight(45);
 
-                    right_bumper2 = true;
+                if (gamepad2.right_bumper) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.extend();
+                    servos.moveArm(.58);
+                    servos.pivot(.9,.9);
+                    servos.openClaw();
                 }
-                else if (!gamepad2.dpad_right) {
-                    right_bumper2 = false;
-                }
-                //d
-                else if (gamepad2.dpad_up && !gamepad2.dpad_up) {
-                    ServoErmSigma.pivot(1);
 
-                    up_bumper2 = true;
-                }
-                else if (!gamepad2.dpad_up) {
-                    up_bumper2 = false;
-                }
-                //0.5 - middle claw pivot
-                else if (gamepad2.dpad_down && !gamepad2.dpad_down) {
-                    ServoErmSigma.pivot(0);
-
-                    down_bumper2 = true;
-                }
-                else if (!gamepad2.dpad_down) {
-                    down_bumper2 = false;
+                if (gamepad2.left_bumper) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.closeClaw();
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.retract();
+                    servos.pivot(.3,.3);
+                    servos.moveArm(0);
                 }
 //                double left = (Claw.diffyLeft.getPosition() + +gamepad2.right_stick_y + gamepad2.right_stick_x);
 //                double right = (Claw.diffyRight.getPosition() + -gamepad2.right_stick_y + gamepad2.right_stick_x);
@@ -310,6 +314,9 @@ public class RedT extends LinearOpMode {
         telemetry.addData("field centric?", Drivetrain.FIELD_CENTRIC);
 
         telemetry.addData("imu data", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+
+        telemetry.addData("diffyL", ServoErmSigma.diffyLeft.getPosition());
+        telemetry.addData("diffyR", ServoErmSigma.diffyRight.getPosition());
 
         telemetry.update();
     }

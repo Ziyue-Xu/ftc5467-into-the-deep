@@ -30,30 +30,16 @@ import java.util.Queue;
 
 public class servoTest extends LinearOpMode {
 
-    public static Servo diffyLeft;
-    public static Servo diffyRight;
-    public static Servo finger;
-    public static Servo linkage;
-    public static Servo arm1;
-    public static Servo arm2;
-
     public static double arm1pos = 0;
     public static double arm2pos = 0;
     public static double diffyleftpos = 0;
     public static double diffyrightpos = 0;
+    public static double linkagepos = 0;
     public static double fingerpos = 0;
-    public static double linkagePos = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
         // setup everything
-
-        diffyLeft = hardwareMap.servo.get("diffyL");
-        diffyRight = hardwareMap.servo.get("diffyR");
-        finger = hardwareMap.servo.get("finger");
-        linkage = hardwareMap.servo.get("link");
-        arm1 = hardwareMap.servo.get("armL");
-        arm2 = hardwareMap.servo.get("armR");
 
 
         Robot.setup(
@@ -68,18 +54,20 @@ public class servoTest extends LinearOpMode {
                 true
         );
 
+
         // waiting...
         waitForStart();
         runtime.reset();
         reset(hardwareMap);
 
-        arm1.setPosition(arm1pos);
-        arm2.setPosition(arm2pos);
-        diffyLeft.setPosition(diffyleftpos);
-        diffyRight.setPosition(diffyrightpos);
-        finger.setPosition(fingerpos);
-        linkage.setPosition(linkagePos);
-        
+        while (opModeIsActive()) {
+            servos.arm1.setPosition(arm1pos);
+            servos.arm2.setPosition(arm2pos);
+            servos.diffyLeft.setPosition(diffyleftpos);
+            servos.diffyRight.setPosition(diffyrightpos);
+            servos.linkage.setPosition(linkagepos);
+            servos.finger.setPosition(fingerpos);
+        }
     }
     public void debug () {
 
@@ -90,7 +78,6 @@ public class servoTest extends LinearOpMode {
         dashboardTelemetry.addData("arm 2 pos: ", arm2pos);
         dashboardTelemetry.addData("diffy left pos: ", diffyleftpos);
         dashboardTelemetry.addData("diffy right pos: ", diffyrightpos);
-        dashboardTelemetry.addData("finger pos: ", fingerpos);
 
         dashboardTelemetry.update();
 

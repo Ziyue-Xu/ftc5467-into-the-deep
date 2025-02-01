@@ -24,49 +24,31 @@ public class ServoErmSigma {
         linkage = hardwareMap.servo.get("link");
         arm1 = hardwareMap.servo.get("armL");
         arm2 = hardwareMap.servo.get("armR");
+        arm2.setDirection(Servo.Direction.REVERSE);
+        diffyRight.setDirection(Servo.Direction.REVERSE);
     }
-    public static void openClaw() {
-        finger.setPosition(1);
+    public void openClaw() {
+        finger.setPosition(.7);
     }
-    public static void closeClaw() {
-        finger.setPosition(0);
+    public void closeClaw() {
+        finger.setPosition(.3);
     }
-    public static void upArm() {
-        arm1.setPosition(0);
-        arm2.setPosition(1);
+    public void moveArm(double pos) {
+        arm1.setPosition(pos);
+        arm2.setPosition(pos);
     }
-    public static void midArm() {
-        arm1.setPosition(.5);
-        arm2.setPosition(.5);
-    }
-    public static void downArm() {
-        arm1.setPosition(.9);
-        arm2.setPosition(0.1);
-    }
-
-    public static void extend() {
-        linkage.setPosition((45+180)/300.0);
-    }
-    public static void retract() {
+    public void extend() {
         linkage.setPosition(.5);
     }
-    public static void pass(){ linkage.setPosition((180-20)/300.0);}
-
-    public static void pivot(double pos) {
-        diffyLeft.setPosition(diffyLeft.getPosition()+pos);
-        diffyRight.setPosition(diffyRight.getPosition()-pos);
+    public void retract() {
+        linkage.setPosition(.9);
     }
+    public void pass(){ linkage.setPosition(1);}
 
-    public static void turnRight(double pos) {
-        diffyLeft.setPosition(pos);
-        diffyRight.setPosition(pos);
+    public void pivot(double posL, double posR) {
+        diffyLeft.setPosition(posL);
+        diffyRight.setPosition(posR);
     }
-
-    public static void turnLeft(double pos) {
-        diffyLeft.setPosition(-pos);
-        diffyRight.setPosition(-pos);
-    }
-
 
 
 }
