@@ -28,17 +28,17 @@ public class ServoErmSigma {
         diffyRight.setDirection(Servo.Direction.REVERSE);
     }
     public void openClaw() {
-        finger.setPosition(.7);
+        finger.setPosition(.6);
     }
     public void closeClaw() {
-        finger.setPosition(.3);
+        finger.setPosition(.4);
     }
     public void moveArm(double pos) {
         arm1.setPosition(pos);
         arm2.setPosition(pos);
     }
     public void extend() {
-        linkage.setPosition(.5);
+        linkage.setPosition(.7);
     }
     public void retract() {
         linkage.setPosition(.9);

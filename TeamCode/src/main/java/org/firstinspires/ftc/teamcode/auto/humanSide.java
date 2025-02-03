@@ -63,9 +63,9 @@ public class humanSide extends LinearOpMode {
 
         // initial theta
         //0 is facing right then goes clockwise
-        initial_theta = 0;
-        theta = 0;
-        desired_theta = 0;
+        initial_theta = Math.PI;
+        theta = Math.PI;
+        desired_theta = Math.PI;
 
         // COOK 🗣‼️
         Queue<Ingredient[]> POT = new LinkedList<>();
@@ -143,11 +143,38 @@ public class humanSide extends LinearOpMode {
                             wait = ingredient.value;
 
                             break;
+
+                        case "linear slide":
+                            desired_linear_slide_position = ingredient.value;
+                            break;
+                        case "servo":
+                            switch (ingredient.claw) {
+                                case "open":
+                                    servos.openClaw();
+                                    break;
+                                case "close":
+                                    servos.closeClaw();
+                                    break;
+                                case "spec grab":
+                                    servos.pivot(0, 0);
+                                    servos.moveArm(0);
+                                    servos.pass();
+                                    break;
+                                case "spec score":
+                                    servos.pivot(.5, .5);
+                                    servos.extend();
+                                    servos.moveArm(.58);
+                                    break;
+                            }
+
+                            break;
                     }
                 }
-
-                cooking = true;
             }
+
+
+            cooking = true;
+
 
             cooked = go_to(desired_position, TELEOP_FIELD);
             telemetry.addData("desired_position.x", desired_position.x);
@@ -174,6 +201,7 @@ public class humanSide extends LinearOpMode {
             end();
         }
     }
+
 
     public void debug() {
 

@@ -58,8 +58,6 @@ public class Robot {
 
     public static ServoErmSigma servos = null;
 
-    public static final int width = 320;
-    public static final int height = 240;
 
     public static void setup(DcMotorEx front_left,
                              DcMotorEx back_right,

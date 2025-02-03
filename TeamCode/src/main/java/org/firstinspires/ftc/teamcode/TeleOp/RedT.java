@@ -67,7 +67,7 @@ public class RedT extends LinearOpMode {
         // initial theta
         initial_theta = Math.PI;
         theta = Math.PI;
-        desired_theta = Math.toRadians(180);
+        desired_theta = Math.PI;
 
         // scoring
         desired_linear_slide_position = 0;
@@ -167,11 +167,11 @@ public class RedT extends LinearOpMode {
                     // goofy ahh sleep
                     try { Thread.sleep(300); } catch (Exception ignored) {}
 
-                    desired_linear_slide_position = 0.7;
+                    desired_linear_slide_position = 0.75;
                     servos.pass();
                     //pivot is supposed to be 0
-                    servos.pivot(0,0);
-                    servos.moveArm(0);
+                    servos.pivot(0.16,0.166);
+                    servos.moveArm(.1);
 
                     a2 = true;
                 } else if (!gamepad2.a) {
@@ -196,9 +196,9 @@ public class RedT extends LinearOpMode {
                     // goofy ahh sleep
                     try { Thread.sleep(300); } catch (Exception ignored) {}
 
-                    desired_linear_slide_position = 0.25;
+                    desired_linear_slide_position = 0.24;
                     servos.extend();
-                    servos.moveArm(.58);
+                    servos.moveArm(.52);
                     servos.pivot(.5,.5);
 
                     y2 = true;
@@ -234,7 +234,15 @@ public class RedT extends LinearOpMode {
                 if (gamepad2.right_bumper) {
                     try { Thread.sleep(300); } catch (Exception ignored) {}
                     servos.extend();
-                    servos.moveArm(.58);
+                    servos.moveArm(.56);
+                    servos.pivot(1,1);
+                    servos.openClaw();
+                }
+
+                if (gamepad2.dpad_up) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.extend();
+                    servos.moveArm(.57);
                     servos.pivot(.9,.9);
                     servos.openClaw();
                 }
@@ -247,12 +255,16 @@ public class RedT extends LinearOpMode {
                     servos.pivot(.3,.3);
                     servos.moveArm(0);
                 }
-//                double left = (Claw.diffyLeft.getPosition() + +gamepad2.right_stick_y + gamepad2.right_stick_x);
-//                double right = (Claw.diffyRight.getPosition() + -gamepad2.right_stick_y + gamepad2.right_stick_x);
-//                double factor = Math.min(left, right)/(Math.max(left, right));
-//                Claw.diffyLeft.setPosition(left * factor);
-//                Claw.diffyRight.setPosition(right * factor);
 
+                if (gamepad2.dpad_right) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.pivot(1, .8);
+                }
+
+                if (gamepad2.dpad_left) {
+                    try { Thread.sleep(300); } catch (Exception ignored) {}
+                    servos.pivot(.8, 1);
+                }
 
 
             }
